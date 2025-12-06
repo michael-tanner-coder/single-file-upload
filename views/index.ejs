@@ -118,6 +118,22 @@
                 })
                 .catch(error => console.error(error));
         }
+
+        function populateDeleteOptions() {
+            fetch('/view')
+                .then(response => response.json())
+                .then(data => {
+                    const fileSelect = document.getElementById('fileSelect');
+                    fileSelect.innerHTML = '';
+                    data.files.forEach(fileName => {
+                        const option = document.createElement('option');
+                        option.value = fileName;
+                        option.textContent = fileName;
+                        fileSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error(error));
+        }
     </script>
 </body>
 </html>
