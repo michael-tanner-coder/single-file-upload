@@ -102,6 +102,22 @@
           return `<i class="${iconClasses[fileExtension.toLowerCase()] || iconClasses['default']}">
       </i>`;
         }
+
+        function deleteFile() {
+            const deleteForm = document.getElementById('deleteForm');
+            const formData = new FormData(deleteForm);
+
+            fetch(`/delete/${formData.get('fileName')}`, {
+                method: 'DELETE',
+            })
+                .then(response => response.text())
+                .then(message => {
+                    alert(message);
+                    populateFileListWithIcons();
+                    populateDeleteOptions();
+                })
+                .catch(error => console.error(error));
+        }
     </script>
 </body>
 </html>
