@@ -44,6 +44,19 @@ app.delete('/delete/:fileName', (req, res) => {
         res.status(404).send(`File "${file_name}" was not found.`);
     }
 });
+
+app.get('/view', (req, res) => {
+    const upload_dir = path.join(__dirname, 'file_storage');
+    fs.readdir(upload_dir, (err, files) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error reading the upload directory.');
+        } else {
+            res.json({files});
+        }
+    });
+});
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 })
