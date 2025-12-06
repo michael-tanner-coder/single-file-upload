@@ -31,6 +31,19 @@ app.get('/', (req, res) => {
 app.post('/upload', upload.single('file'), (req, res) => {
     res.redirect('/')
 });
+
+app.delete('/delete/:fileName', (req, res) => {
+    const file_name = req.params.fileName;
+    const file_path = path.join(__dirname, 'file_storage', file_name);
+
+    if (fs.existsSync(file_path)) {
+        fs.unlinkSync(file_path);
+        res.send(`File "${file_name}" has been deleted.`);
+    } 
+    else {
+        res.status(404).send(`File "${file_name}" was not found.`);
+    }
+});
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 })
